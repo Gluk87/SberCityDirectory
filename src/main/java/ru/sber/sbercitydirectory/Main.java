@@ -41,5 +41,24 @@ public class Main {
                 o2.getDistrict().compareTo(o1.getDistrict()) :
                 o2.getName().compareTo(o1.getName())).toList().forEach(System.out::println);
 
+        printPopulation(cities);
+
+    }
+
+    private static void printPopulation(List<City> citiesList) {
+        City[] cities = new City[citiesList.size()];
+        for (int i = 0; i < citiesList.size(); i++) {
+            cities[i] = citiesList.get(i);
+        }
+        int id = 0;
+        int countPopulation = 0;
+        for (int i = 1; i < cities.length; i++) {
+            if (cities[i].getPopulation() > countPopulation) {
+                countPopulation = cities[i].getPopulation();
+                id = i;
+            }
+        }
+        System.out.println("Индекс элемента и значение с наибольшим количеством жителей города");
+        System.out.println("[" + id + "] = " + countPopulation);
     }
 }
