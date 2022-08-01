@@ -1,14 +1,11 @@
 package ru.sber.sbercitydirectory;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        List<City> cities= new ArrayList<>();
+        List<City> cities = new ArrayList<>();
         try (FileReader fileReader = new FileReader(Objects.requireNonNull(Main.class.getResource("/cityDirectory.csv")).getFile());
              Scanner scanner = new Scanner(new BufferedReader(fileReader))) {
             while (scanner.hasNextLine()) {
@@ -33,6 +30,16 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("Список городов:");
         cities.forEach(System.out::println);
+
+        System.out.println("Список городов, отсортированные по наименованию в алфавитном порядке по убыванию без учета регистра:");
+        cities.stream().sorted((o1, o2) -> o2.getName().toLowerCase().compareTo(o1.getName().toLowerCase())).toList().forEach(System.out::println);
+
+        System.out.println("по федеральному округу и наименованию города внутри каждого федерального округа в алфавитном порядке по убыванию с учетом регистра:");
+        cities.stream().sorted((o1, o2) -> !Objects.equals(o2.getDistrict(), o1.getDistrict()) ?
+                o2.getDistrict().compareTo(o1.getDistrict()) :
+                o2.getName().compareTo(o1.getName())).toList().forEach(System.out::println);
+
     }
 }
