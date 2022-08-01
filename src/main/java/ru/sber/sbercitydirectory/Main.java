@@ -41,11 +41,12 @@ public class Main {
                 o2.getDistrict().compareTo(o1.getDistrict()) :
                 o2.getName().compareTo(o1.getName())).toList().forEach(System.out::println);
 
-        printPopulation(cities);
+        searchCityWithLargestPopulation(cities);
+        getCityCountByRegion(cities);
 
     }
 
-    private static void printPopulation(List<City> citiesList) {
+    private static void searchCityWithLargestPopulation(List<City> citiesList) {
         City[] cities = new City[citiesList.size()];
         for (int i = 0; i < citiesList.size(); i++) {
             cities[i] = citiesList.get(i);
@@ -60,5 +61,19 @@ public class Main {
         }
         System.out.println("Индекс элемента и значение с наибольшим количеством жителей города");
         System.out.println("[" + id + "] = " + countPopulation);
+    }
+    
+    private static void getCityCountByRegion(List<City> citiesList) {
+        List<String> regions = new ArrayList<>();
+        for (City city: citiesList) {
+            if (!regions.contains(city.getRegion())) {
+                regions.add(city.getRegion());
+            }
+        }
+        System.out.println("Количество городов в каждом регионе:");
+        for (String region: regions) {
+            System.out.println(region + " - " + citiesList.stream().filter(o -> o.getRegion().equals(region)).count());
+        }
+        
     }
 }

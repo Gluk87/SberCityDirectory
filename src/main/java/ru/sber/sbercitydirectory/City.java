@@ -23,6 +23,10 @@ public class City {
         return district;
     }
 
+    public String getRegion() {
+        return region;
+    }
+
     public int getPopulation() {
         return population;
     }
